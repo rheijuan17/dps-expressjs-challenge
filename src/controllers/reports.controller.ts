@@ -21,7 +21,6 @@ export class ReportController {
 			)) as Report[];
 		} else {
 			reports = (await this.reportRepository.getAllReports()) as Report[];
-			console.log('reports: ', reports);
 			if (targetWord) {
 				targetWord = targetWord.toLowerCase();
 				reports = reports.reduce<Report[]>((result, report) => {
@@ -29,7 +28,6 @@ export class ReportController {
 						return result;
 					}
 
-					console.log('text', report.text);
 					const paragraph = report.text
 						.toLowerCase()
 						.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
