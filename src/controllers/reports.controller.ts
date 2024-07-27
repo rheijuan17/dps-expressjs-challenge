@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import ReportRepository from '../repositories/reports.repository';
 import { Report } from '../models/Report';
+import config from '../../config/default';
 
 export class ReportController {
 	reportRepository: ReportRepository;
@@ -36,7 +37,7 @@ export class ReportController {
 						(word) => word === targetWord,
 					).length;
 
-					if (wordCount >= 3) {
+					if (wordCount >= Number(config.WORD_THRESHOLD)) {
 						result.push(report);
 					}
 

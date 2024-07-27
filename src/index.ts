@@ -2,11 +2,12 @@ import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import projects from './routes/projects.routes';
 import reports from './routes/reports.routes';
+import config from '../config/default';
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = Number(config.PORT);
 
 app.use(express.json());
 
