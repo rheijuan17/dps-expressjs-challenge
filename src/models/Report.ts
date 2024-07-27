@@ -1,11 +1,15 @@
 export class Report {
 	id: string;
-	name: string | undefined;
-	projectId: string | undefined;
+	text: string | undefined;
+	projectid: string | undefined;
 
-	constructor(id: string, name: string, projectId: string | undefined) {
+	constructor(
+		id: string,
+		text: string | undefined,
+		projectid: string | undefined,
+	) {
 		this.id = id;
-		this.name = name;
-		this.projectId = projectId;
+		this.text = text;
+		this.projectid = projectid;
 	}
 }

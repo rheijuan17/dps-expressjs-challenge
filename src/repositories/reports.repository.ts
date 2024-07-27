@@ -12,28 +12,28 @@ class ReportRepository {
 		return db.query(query, { id });
 	}
 
-	async getReportByProjectId(id: string) {
-		const query = 'SELECT * FROM reports WHERE project_id = :id';
+	async getReportsByProjectId(id: string) {
+		const query = 'SELECT * FROM reports WHERE projectid = :id';
 		return db.query(query, { id });
 	}
 
 	async createReport(report: Report) {
-		const query = 'INSERT INTO reports VALUES (:id, :text, :projectId)';
+		const query = 'INSERT INTO reports VALUES (:id, :text, :projectid)';
 		return db.run(query, { ...report });
 	}
 
-	async updateReportText(text: string, id: string) {
+	async updateReportText(id: string, text: string) {
 		const query = 'UPDATE reports SET text = :text WHERE id = :id';
 		return db.run(query, { text, id });
 	}
 
-	async updateReportProjectId(projectId: string, id: string) {
+	async updateReportProjectId(id: string, projectId: string) {
 		const query =
 			'UPDATE reports SET projectId = :projectId WHERE id = :id';
 		return db.run(query, { projectId, id });
 	}
 
-	async updateReport(text: string, projectId: string, id: string) {
+	async updateReport(id: string, text: string, projectId: string) {
 		const query =
 			'UPDATE reports SET text = :text, projectId = :projectId WHERE id = :id';
 		return db.run(query, { text, projectId, id });
