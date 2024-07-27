@@ -1,7 +1,7 @@
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
-import projects from './routes/projects';
-import reports from './routes/reports';
+import projects from './routes/projects.routes';
+import reports from './routes/reports.routes';
 
 dotenv.config();
 
