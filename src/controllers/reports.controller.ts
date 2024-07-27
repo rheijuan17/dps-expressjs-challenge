@@ -11,13 +11,40 @@ export class ReportController {
 	}
 
 	async getAllReports(req: Request, res: Response): Promise<void> {
-		let reports;
 		const projectid = req.query.projectid as string;
+		let targetWord = req.query.targetWord as string;
+		let reports;
+
 		if (projectid) {
-			reports =
-				await this.reportRepository.getReportsByProjectId(projectid);
+			reports = (await this.reportRepository.getReportsByProjectId(
+				projectid,
+			)) as Report[];
 		} else {
-			reports = await this.reportRepository.getAllReports();
+			reports = (await this.reportRepository.getAllReports()) as Report[];
+			console.log('reports: ', reports);
+			if (targetWord) {
+				targetWord = targetWord.toLowerCase();
+				reports = reports.reduce<Report[]>((result, report) => {
+					if (!report.text) {
+						return result;
+					}
+
+					console.log('text', report.text);
+					const paragraph = report.text
+						.toLowerCase()
+						.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+					const words = paragraph?.split(/\s+/);
+					const wordCount = words?.filter(
+						(word) => word === targetWord,
+					).length;
+
+					if (wordCount >= 3) {
+						result.push(report);
+					}
+
+					return result;
+				}, []);
+			}
 		}
 
 		res.status(200).json(reports);
@@ -56,7 +83,13 @@ export class ReportController {
 
 	async deleteReport(req: Request, res: Response): Promise<void> {
 		const { id } = req.params;
-		await this.reportRepository.deleteReport(id);
+		const projectid = req.query.projectid as string;
+
+		if (projectid) {
+			await this.reportRepository.deleteByProjectId(projectid);
+		} else {
+			await this.reportRepository.deleteReport(id);
+		}
 
 		res.status(204).json();
 	}

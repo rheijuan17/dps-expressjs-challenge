@@ -43,6 +43,11 @@ class ReportRepository {
 		const query = 'DELETE FROM reports WHERE id = :id';
 		return db.run(query, { id });
 	}
+
+	async deleteByProjectId(projectid: string) {
+		const query = 'DELETE FROM reports WHERE projectid = :projectid';
+		return db.run(query, { projectid });
+	}
 }
 
 export default ReportRepository;
