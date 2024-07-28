@@ -17,21 +17,22 @@ class ProjectRepository {
 		return db.run(query, { ...project });
 	}
 
-	async updateProjectName(id: string, name: string) {
-		const query = 'UPDATE projects SET name = :name WHERE id = :id';
-		return db.run(query, { name, id });
-	}
+	async updateProject(id: string, project: Project) {
+		const nonEmptyEntries = Object.entries(project).filter(
+			([key, value]) => value !== '' && key != 'id',
+		);
 
-	async updateProjectDescription(id: string, description: string) {
-		const query =
-			'UPDATE projects SET description = :description WHERE id = :id';
-		return db.run(query, { description, id });
-	}
+		const _project = nonEmptyEntries.reduce((acc, [key, value]) => {
+			acc[key as keyof Project] = value;
+			return acc;
+		}, {} as Partial<Project>);
 
-	async updateProject(id: string, name: string, description: string) {
-		const query =
-			'UPDATE projects SET name = :name, description = :description WHERE id = :id';
-		return db.run(query, { name, description, id });
+		const parameters = Object.keys(_project)
+			.map((key) => `${key} = :${key}`)
+			.join(', ');
+
+		const query = `UPDATE projects SET ${parameters} WHERE id = :id`;
+		return db.run(query, { ..._project, id });
 	}
 
 	async deleteProject(id: string) {

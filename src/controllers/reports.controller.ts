@@ -69,10 +69,7 @@ export class ReportController {
 			return;
 		}
 
-		const [project] =
-			await this.projectRepository.getProjectById(projectid);
-
-		if (!project) {
+		if (!(await this.validateProject(projectid))) {
 			res.status(400)
 				.json({ error: "Invalid Parameters: ['projectid']" })
 				.send();
@@ -87,16 +84,18 @@ export class ReportController {
 	}
 
 	async updateReport(req: Request, res: Response): Promise<void> {
-		const { text, projectid } = req.body;
-		const { id } = req.params;
+		const body = req.body;
 
-		if (text && projectid) {
-			await this.reportRepository.updateReport(id, text, projectid);
-		} else if (text) {
-			await this.reportRepository.updateReportText(id, text);
-		} else {
-			await this.reportRepository.updateReportProjectId(id, projectid);
+		if (req.body.projectid) {
+			if (!(await this.validateProject(req.body.projectid))) {
+				res.status(400).json({
+					error: "Invalid Parameters: ['projectid']",
+				});
+				return;
+			}
 		}
+
+		await this.reportRepository.updateReport(req.params.id, body);
 
 		res.status(204).json();
 	}
@@ -106,11 +105,28 @@ export class ReportController {
 		const projectid = req.query.projectid as string;
 
 		if (projectid) {
+			if (!(await this.validateProject(projectid))) {
+				res.status(400).json({
+					error: "Invalid Parameters: ['projectid']",
+				});
+				return;
+			}
+
 			await this.reportRepository.deleteByProjectId(projectid);
 		} else {
 			await this.reportRepository.deleteReport(id);
 		}
 
 		res.status(204).json();
+	}
+
+	async validateProject(projectid: string): Promise<boolean> {
+		const [project] =
+			await this.projectRepository.getProjectById(projectid);
+		if (!project) {
+			return Promise.resolve(false);
+		}
+
+		return Promise.resolve(true);
 	}
 }

@@ -22,21 +22,22 @@ class ReportRepository {
 		return db.run(query, { ...report });
 	}
 
-	async updateReportText(id: string, text: string) {
-		const query = 'UPDATE reports SET text = :text WHERE id = :id';
-		return db.run(query, { text, id });
-	}
+	async updateReport(id: string, report: Report) {
+		const nonEmptyEntries = Object.entries(report).filter(
+			([key, value]) => value !== '' && key != 'id',
+		);
 
-	async updateReportProjectId(id: string, projectId: string) {
-		const query =
-			'UPDATE reports SET projectId = :projectId WHERE id = :id';
-		return db.run(query, { projectId, id });
-	}
+		const _report = nonEmptyEntries.reduce((acc, [key, value]) => {
+			acc[key as keyof Report] = value;
+			return acc;
+		}, {} as Partial<Report>);
 
-	async updateReport(id: string, text: string, projectId: string) {
-		const query =
-			'UPDATE reports SET text = :text, projectId = :projectId WHERE id = :id';
-		return db.run(query, { text, projectId, id });
+		const parameters = Object.keys(_report)
+			.map((key) => `${key} = :${key}`)
+			.join(', ');
+
+		const query = `UPDATE reports SET ${parameters} WHERE id = :id`;
+		return db.run(query, { ..._report, id });
 	}
 
 	async deleteReport(id: string) {

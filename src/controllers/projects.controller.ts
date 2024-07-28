@@ -18,9 +18,8 @@ export class ProjectController {
 	}
 
 	async getProject(req: Request, res: Response): Promise<void> {
-		const { id } = req.params;
 		const [project] = (await this.projectRepository.getProjectById(
-			id,
+			req.params.id,
 		)) as Project[];
 
 		res.status(200).json(project);
@@ -28,34 +27,25 @@ export class ProjectController {
 
 	async createProject(req: Request, res: Response): Promise<void> {
 		const { name, description } = req.body;
-		const id = uuid();
-		const project = new Project(id, name, description);
+		const project = new Project(uuid(), name, description);
 
 		await this.projectRepository.createProject(project);
 		res.status(201).json(project);
 	}
 
 	async updateProject(req: Request, res: Response): Promise<void> {
-		const { name, description } = req.body;
-		const { id } = req.params;
+		const project = new Project(
+			req.params.id,
+			req.body.name,
+			req.body.description,
+		);
 
-		if (name && description) {
-			await this.projectRepository.updateProject(id, name, description);
-		} else if (name) {
-			await this.projectRepository.updateProjectName(id, name);
-		} else {
-			await this.projectRepository.updateProjectDescription(
-				id,
-				description,
-			);
-		}
-
+		await this.projectRepository.updateProject(req.params.id, project);
 		res.status(204).json();
 	}
 
 	async deleteProject(req: Request, res: Response): Promise<void> {
-		const { id } = req.params;
-		await this.projectRepository.deleteProject(id);
+		await this.projectRepository.deleteProject(req.params.id);
 
 		res.status(204).json();
 	}
