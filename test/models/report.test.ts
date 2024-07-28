@@ -2,12 +2,12 @@ import { describe, beforeEach, test, expect } from '@jest/globals';
 import { Report } from '../../src/models/Report';
 import { v4 as uuid } from 'uuid';
 
-let report: Report;
-const text = 'Test Report';
-const projectid = 'SAMPLE_PROJECT_ID';
-const id = uuid();
-
 describe('models/project', () => {
+	let report: Report;
+	const text = 'Test Report';
+	const projectid = 'SAMPLE_PROJECT_ID';
+	const id = uuid();
+
 	beforeEach(() => {
 		report = new Report(id, text, projectid);
 	});
