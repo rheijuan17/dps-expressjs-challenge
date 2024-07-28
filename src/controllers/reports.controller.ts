@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import ReportRepository from '../repositories/reports.repository';
+import ProjectRepository from '../repositories/projects.repository';
 import { Report } from '../models/Report';
 import config from '../../config/default';
 
 export class ReportController {
 	reportRepository: ReportRepository;
+	projectRepository: ProjectRepository;
 
 	constructor() {
 		this.reportRepository = new ReportRepository();
+		this.projectRepository = new ProjectRepository();
 	}
 
 	async getAllReports(req: Request, res: Response): Promise<void> {
@@ -58,6 +61,24 @@ export class ReportController {
 
 	async createReport(req: Request, res: Response): Promise<void> {
 		const { text, projectid } = req.body;
+
+		if (!projectid) {
+			res.status(400)
+				.json({ error: "Incomplete Parameters: ['projectid']" })
+				.send();
+			return;
+		}
+
+		const [project] =
+			await this.projectRepository.getProjectById(projectid);
+
+		if (!project) {
+			res.status(400)
+				.json({ error: "Invalid Parameters: ['projectid']" })
+				.send();
+			return;
+		}
+
 		const id = uuid();
 		const report = new Report(id, text, projectid);
 
