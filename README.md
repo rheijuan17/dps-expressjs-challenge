@@ -41,41 +41,43 @@ NOTE: You can use ([db.service.ts](./src/services/db.service.ts)) to handle SQL 
 \
 Happy coding!
 
-
 ## API Documentation
 
-- [Projects](#projects)
-    - [Get Project](#get-project)
-        - [Get All Projects](#get-all-projects)
-        - [Get Project By Id](#get-project-by-id)
-    - [Create Project](#create-project)
-    - [Update Project](#update-project)
-    - [Delete Project](#delete-project)
-- [Reports](#reports)
-    - [Get Report](#get-report)
-        - [Get All Reports](#get-all-reports)
-        - [Get Report By Id](#get-report-by-id)
-        - [Get Reports By Project ID](#get-by-project-id)
-        - [Get Reports with a word repeated for three (3) times](#get-by-word)
-    - [Create Report](#create-report)
-    - [Update Report](#update-report)
-    - [Delete Report](#delete-report)
-        - [Delete Reports By Project ID](#delete-by-project-id)
+-   [Projects](#projects)
+    -   [Get Project](#get-project)
+        -   [Get All Projects](#get-all-projects)
+        -   [Get Project By Id](#get-project-by-id)
+    -   [Create Project](#create-project)
+    -   [Update Project](#update-project)
+    -   [Delete Project](#delete-project)
+-   [Reports](#reports)
+    -   [Get Report](#get-report)
+        -   [Get All Reports](#get-all-reports)
+        -   [Get Report By Id](#get-report-by-id)
+        -   [Get Reports By Project ID](#get-by-project-id)
+        -   [Get Reports with a word repeated for three (3) times](#get-by-word)
+    -   [Create Report](#create-report)
+    -   [Update Report](#update-report)
+    -   [Delete Report](#delete-report)
+        -   [Delete Reports By Project ID](#delete-by-project-id)
 
 # Projects
 
 ## 1. Get project
 
 ### 1.1 Get All Projects
+
 Retrieves all projects in the database
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/projects' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 [
     {
@@ -92,15 +94,18 @@ Sample Response
 ```
 
 ### 1.2 Get Project By Id
+
 Retrieves a project given a projectId
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/projects/ad6253d9-629b-4726-be3a-3a9a29fca695' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 {
     "id": "ad6253d9-629b-4726-be3a-3a9a29fca695",
@@ -110,9 +115,11 @@ Sample Response
 ```
 
 ## 2. Create Project
+
 Create a project with the given attributes
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/projects' \
 --header 'Authorization: Password123' \
@@ -124,6 +131,7 @@ curl --location 'http://localhost:3000/projects' \
 ```
 
 Sample Response
+
 ```
 {
     "id": "1549690f-3fa1-4e25-90ec-6e1e150587a3",
@@ -133,9 +141,11 @@ Sample Response
 ```
 
 ## 3. Update Project
+
 Update a details of a project. Name and description can be updated but ID cannot be.
 
 Sample Request
+
 ```
 curl --location --request PATCH 'http://localhost:3000/projects/1549690f-3fa1-4e25-90ec-6e1e150587a3' \
 --header 'Authorization: Password123' \
@@ -147,38 +157,45 @@ curl --location --request PATCH 'http://localhost:3000/projects/1549690f-3fa1-4e
 ```
 
 Sample Response
+
 ```
 204 No Content
 ```
 
 ## 4. Delete Project
+
 Delete a project with the given ID
 
 Sample Request
+
 ```
 curl --location --request DELETE 'http://localhost:3000/projects/a65e36cb-bc14-45d0-86b9-2d26e429e402aaa' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 204 No Content
 ```
 
-# Reports 
+# Reports
 
 ## 1. Get report
 
 ### 1.1 Get All Reports
+
 Retrieves all reports in the database
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/reports' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 [
     {
@@ -195,15 +212,18 @@ Sample Response
 ```
 
 ### 1.2 Get Report By Id
+
 Retrieve all reports in the database
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/reports/26c6e474-a479-40c1-a5fc-e8329c929779' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 {
     "id": "26c6e474-a479-40c1-a5fc-e8329c929779",
@@ -213,15 +233,18 @@ Sample Response
 ```
 
 ### 1.3 Get Reports By Project ID
+
 Retrieve all reports with the same project ID
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/reports?projectid=1' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 [
     {
@@ -238,15 +261,18 @@ Sample Response
 ```
 
 ### 1.4 Get Reports with a word repeating for at least three (3) times
+
 Retrieve a list of report where a word appears for three (3) times
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/reports?word=this' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 [
     {
@@ -263,9 +289,11 @@ Sample Response
 ```
 
 ## 2. Create report
+
 Create a report with the given attributes. Project must be existing before creation of report.
 
 Sample Request
+
 ```
 curl --location 'http://localhost:3000/reports' \
 --header 'Authorization: Password123' \
@@ -277,6 +305,7 @@ curl --location 'http://localhost:3000/reports' \
 ```
 
 Sample Response
+
 ```
 {
     "id": "4e25924a-9e59-4602-87f5-321da0ec658c",
@@ -286,9 +315,11 @@ Sample Response
 ```
 
 ## 3. Update Report
+
 Update a report with the given attributes. Project must be existing before creation of report..
 
 Sample Request
+
 ```
 curl --location --request PATCH 'http://localhost:3000/reports/4e25924a-9e59-4602-87f5-321da0ec658c' \
 --header 'Authorization: Password123' \
@@ -300,6 +331,7 @@ curl --location --request PATCH 'http://localhost:3000/reports/4e25924a-9e59-460
 ```
 
 Sample Response
+
 ```
 204 No Content
 ```
@@ -307,28 +339,34 @@ Sample Response
 ## 4. Delete Report
 
 ### 4.1 Delete Report By Id
+
 Delete a report with the given ID
 Sample Request
+
 ```
 curl --location --request DELETE 'http://localhost:3000/reports/4e25924aadasdas-9e59-4602-87f5-321da0ec658c' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 204 No Content
 ```
 
 ### 4.2 Delete Report By Project Id
+
 Delete all reports with the given project ID
 
 Sample Request
+
 ```
 curl --location --request DELETE 'http://localhost:3000/reports?projectid=c942e2f1-4d62-4f4b-82b8-953e9e000453' \
 --header 'Authorization: Password123'
 ```
 
 Sample Response
+
 ```
 204 No Content
 ```

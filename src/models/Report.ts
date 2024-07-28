@@ -3,13 +3,9 @@ export class Report {
 	text: string;
 	projectid: string;
 
-	constructor(
-		id: string,
-		text: string | undefined,
-		projectid: string | undefined,
-	) {
+	constructor(id: string, text: string | undefined, projectid: string) {
 		this.id = id;
 		this.text = text ? text : '';
-		this.projectid = projectid ? projectid : '';
+		this.projectid = projectid;
 	}
 }
