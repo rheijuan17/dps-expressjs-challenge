@@ -66,7 +66,7 @@ Happy coding!
 
 ## 1. Get project
 
-### 1.1. Get All Projects
+### 1.1 Get All Projects
 Retrieves all projects in the database
 
 Sample Request
@@ -91,7 +91,7 @@ Sample Response
 ]
 ```
 
-### Get Project By Id
+### 1.2 Get Project By Id
 Retrieves a project given a projectId
 
 Sample Request
@@ -169,7 +169,7 @@ Sample Response
 
 ## 1. Get report
 
-### 1.1. Get All Reports
+### 1.1 Get All Reports
 Retrieves all reports in the database
 
 Sample Request
@@ -194,7 +194,7 @@ Sample Response
 ]
 ```
 
-### 1.2. Get Report By Id
+### 1.2 Get Report By Id
 Retrieve all reports in the database
 
 Sample Request
@@ -212,7 +212,7 @@ Sample Response
 }
 ```
 
-### 1.3. Get Reports By Project ID
+### 1.3 Get Reports By Project ID
 Retrieve all reports with the same project ID
 
 Sample Request
@@ -237,7 +237,7 @@ Sample Response
 ]
 ```
 
-### 1.4. Get Reports with a word repeating for at least three (3) times
+### 1.4 Get Reports with a word repeating for at least three (3) times
 Retrieve a list of report where a word appears for three (3) times
 
 Sample Request
@@ -306,7 +306,7 @@ Sample Response
 
 ## 4. Delete Report
 
-### Delete Report By Id
+### 4.1 Delete Report By Id
 Delete a report with the given ID
 Sample Request
 ```
@@ -319,7 +319,7 @@ Sample Response
 204 No Content
 ```
 
-### Delete Report By Project Id
+### 4.2 Delete Report By Project Id
 Delete all reports with the given project ID
 
 Sample Request
