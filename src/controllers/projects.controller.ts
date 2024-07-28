@@ -11,14 +11,17 @@ export class ProjectController {
 	}
 
 	async getAllProjects(res: Response): Promise<void> {
-		const projects = await this.projectRepository.getAllProjects();
+		const projects =
+			(await this.projectRepository.getAllProjects()) as Project[];
 
 		res.status(200).json(projects);
 	}
 
 	async getProject(req: Request, res: Response): Promise<void> {
 		const { id } = req.params;
-		const [project] = await this.projectRepository.getProjectById(id);
+		const [project] = (await this.projectRepository.getProjectById(
+			id,
+		)) as Project[];
 
 		res.status(200).json(project);
 	}
@@ -29,7 +32,7 @@ export class ProjectController {
 		const project = new Project(id, name, description);
 
 		await this.projectRepository.createProject(project);
-		res.status(201).json();
+		res.status(201).json(project);
 	}
 
 	async updateProject(req: Request, res: Response): Promise<void> {

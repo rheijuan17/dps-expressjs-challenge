@@ -62,7 +62,7 @@ export class ReportController {
 		const report = new Report(id, text, projectid);
 
 		await this.reportRepository.createReport(report);
-		res.status(201).json();
+		res.status(201).json(report);
 	}
 
 	async updateReport(req: Request, res: Response): Promise<void> {

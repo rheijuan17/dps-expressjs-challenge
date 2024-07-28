@@ -1,7 +1,7 @@
 export class Project {
 	id: string;
-	name: string | undefined;
-	description: string | undefined;
+	name: string;
+	description: string;
 
 	constructor(
 		id: string,
@@ -9,7 +9,7 @@ export class Project {
 		description: string | undefined,
 	) {
 		this.id = id;
-		this.name = name;
-		this.description = description;
+		this.name = name ? name : '';
+		this.description = description ? description : '';
 	}
 }

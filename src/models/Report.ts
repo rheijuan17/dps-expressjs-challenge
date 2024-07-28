@@ -1,7 +1,7 @@
 export class Report {
 	id: string;
-	text: string | undefined;
-	projectid: string | undefined;
+	text: string;
+	projectid: string;
 
 	constructor(
 		id: string,
@@ -9,7 +9,7 @@ export class Report {
 		projectid: string | undefined,
 	) {
 		this.id = id;
-		this.text = text;
-		this.projectid = projectid;
+		this.text = text ? text : '';
+		this.projectid = projectid ? projectid : '';
 	}
 }
